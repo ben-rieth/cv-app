@@ -14,35 +14,14 @@ const DisplayContainer = styled.div`
         "sidebar main"
 `;
 
-const HeaderGridArea = styled.div`
-    grid-area: header;
-`;
-
-const MainGridArea = styled.div`
-    grid-area: main;
-`;
-
-const SidebarGridArea = styled.div`
-    grid-area: sidebar;
-`;
-
 class ResumeDisplay extends React.Component {
 
     render() {
         return (
             <DisplayContainer>
-                <HeaderGridArea>
-                    <Header />
-                </HeaderGridArea>
-
-                <SidebarGridArea>
-                    <Sidebar />
-                </SidebarGridArea>
-
-                <MainGridArea>
-                    <Main />
-                </MainGridArea>
-                
+                <Header />
+                <Sidebar />
+                <Main />              
             </DisplayContainer>
         );
     }
