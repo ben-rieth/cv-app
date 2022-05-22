@@ -1,8 +1,5 @@
-
 import React from "react";
-
-import FlexibleInput from "./components/FlexibleInput";
-
+import ResumeDisplay from "./components/ResumeDisplay";
 import './App.css';
 
 class App extends React.Component {
@@ -12,6 +9,7 @@ class App extends React.Component {
         <div className="header-container">
           <h1 className="header">CV Builder</h1>
         </div>
+        <ResumeDisplay />
       </div>
     );
   }
