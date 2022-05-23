@@ -1,8 +1,9 @@
 import React from "react";
 import styled from "styled-components";
+import AddSectionDropdown from "../AddSectionDropdown";
 
 const MainContainer = styled.div`
-    background-color: red;
+    border: 1px solid red;
     grid-area: main;
 `;
 
@@ -10,7 +11,7 @@ class Main extends React.Component {
     render() {
         return(
             <MainContainer>
-                main
+                <AddSectionDropdown />
             </MainContainer>
         );
     }
