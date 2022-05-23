@@ -6,6 +6,9 @@ import AddIcon from './../images/add.svg';
 const DropdownContainer = styled.div`
     position: relative;
     display: inline-block;
+    padding: 0;
+    background-color: white;
+    width: 100%;
 `;
 
 const DropdownContent = styled.div`
@@ -13,11 +16,14 @@ const DropdownContent = styled.div`
     position: absolute;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
+    width: 100%;
+    background-color: transparent;
+    
 
     & > button {
-        display: block;
         color: black;
         padding: 12px 16px;
+        width: 100%;
     }
 `;
 
@@ -28,6 +34,8 @@ const DropButton = styled.button`
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 100%;
+    padding: 0;
 
     & > img {
         width: 35px;
@@ -57,6 +65,7 @@ class AddSectionDropdown extends React.Component {
     }
 
     render() {
+        const {options} = this.props;
         return(
             <DropdownContainer>
                 <DropButton onClick={this.showDropdownItems}>
@@ -64,14 +73,20 @@ class AddSectionDropdown extends React.Component {
                     <p>Add Main Section</p>
                 </DropButton>
                 <DropdownContent visible={this.state.dropdownVisible}>
-                    <button>Education</button>
-                    <button>Work Experience</button>
-                    <button>Achievements</button>
+                    {options.map((option) => {
+                        return <button key={option.id} onClick={option.onSelectOption}>
+                            {option.optionName}
+                        </button>
+                    })};
                 </DropdownContent>
             </DropdownContainer>
         )
     }
 
+}
+
+AddSectionDropdown.defaultProps= {
+    options: []
 }
 
 export default AddSectionDropdown;
