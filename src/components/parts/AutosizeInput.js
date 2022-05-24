@@ -1,8 +1,9 @@
 import React from "react";
 import styled from 'styled-components';
 
+import CheckCircleIcon from './../../images/check_circle.svg';
+
 const InputWrapper = styled.div`
-    max-width: 100%;
     display: flex;
     align-items: center;
     position: relative;
@@ -14,8 +15,15 @@ const InputWrapper = styled.div`
 const Placeholder = styled.div`
     opacity: 0.3;
     position: absolute;
-    left: 10px;
     pointer-events: none;
+`;
+
+const ValidityIcon = styled.img`
+    position: absolute;
+    right: 10px;
+    pointer-events: none;
+    width: ${props => props.iconWidth}rem;
+    filter: invert(96%) sepia(81%) saturate(3047%) hue-rotate(79deg) brightness(96%) contrast(112%);
 `;
 
 const Input = styled.span`
@@ -23,16 +31,12 @@ const Input = styled.span`
     border: none;
     outline: none;
     border-bottom: 2px solid lightgrey;
-    padding: 10px;
+    padding: 0 0 2px 0;
     white-space: nowrap;
     overflow: hidden;
 
     &:focus {
         border-bottom: 2px solid dodgerblue;
-
-        ${'' /* & + .label {
-            opacity: 0;
-        } */}
     }
 `;
 
@@ -49,6 +53,12 @@ class AutosizeInput extends React.Component {
         this.onInputChange = this.onInputChange.bind(this);
         this.onKeyDown = this.onKeyDown.bind(this);
         this.stopIfPastCharacterMax = this.stopIfPastCharacterMax.bind(this);
+        this.doesInputMatchPattern = this.doesInputMatchPattern.bind(this);
+    }
+
+    doesInputMatchPattern(event) {
+        const {pattern} = this.props;
+        return pattern.test(event.target.textContent);    
     }
 
     onInputChange(event) {
@@ -57,9 +67,16 @@ class AutosizeInput extends React.Component {
         if (event.target.textContent.length < characterLimit) {
             this.setState({
                 value: event.target.textContent,
-                placeholderShown: event.target.textContent === "" ? true : false
+                placeholderShown: event.target.textContent === "" ? true : false,
+                matchesPattern: this.doesInputMatchPattern(event)
             });
         }
+
+        console.log(this.props.pattern,
+            'matches', 
+            event.target.textContent,
+            ":",
+            this.doesInputMatchPattern(event));
     }
 
     stopNewLine(event) {
@@ -100,6 +117,8 @@ class AutosizeInput extends React.Component {
                 <Placeholder className="label">
                     {this.state.placeholderShown ? placeholder : ''}
                 </Placeholder>
+                {this.state.matchesPattern ? 
+                    <ValidityIcon src={CheckCircleIcon} iconWidth={fontSize}/> : <div></div>}
             </InputWrapper>
         );
     }
@@ -110,7 +129,8 @@ AutosizeInput.defaultProps = {
     placeholder: '',
     fontSize: 1,
     initialValue: "",
-    characterLimit: 100
+    characterLimit: 100,
+    pattern: /[\s\S]*/
 }
 
 export default AutosizeInput;
