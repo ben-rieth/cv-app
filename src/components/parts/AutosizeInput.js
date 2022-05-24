@@ -11,7 +11,8 @@ import ErrorIcon from './../../images/error.svg';
  * @property {boolean} focused - whether or not the input is focused
  */
 const InputWrapper = styled.div`
-    width: calc(${props => props.len}ch + ${props=>props.fontSize}rem + 5px);
+    width: calc(${props => props.len}ch + 
+        ${props=>props.leaveSpaceForIcon ? props.fontSize : 0}rem + 10px);
     max-width: 95%;
     display: flex;
     align-items: center;
@@ -266,6 +267,7 @@ class AutosizeInput extends React.Component {
                     fontSize={fontSize}                      //the font size of the element
                     len={elementLength}                      //the width of the input text
                     focused={focused}                        //whether or not the element is focused
+                    leaveSpaceForIcon={icon}                 //whether or not the input should leave room for the validity marker       
             >                       
                 <Input
                     len={elementLength}                      //the width of the input text
