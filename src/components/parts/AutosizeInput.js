@@ -202,9 +202,11 @@ class AutosizeInput extends React.Component {
      */
     stopIfPastCharacterMax(event) {
         const { characterLimit } = this.props;
-
+        const printableKeys = [" ", "Decimal", "Multiply", "Add", "Divide", "Subtract", "Separator"]
         if(event.target.textContent.length >= characterLimit) {
-            if(event.code !== "Backspace" && event.code !== "Delete" && event.code !== "Tab" ) {
+            if(/^[\s\S]$/.test(event.key) ||
+                    printableKeys.includes(event.key) ||
+                    event.key.includes("Key")) {
                 event.preventDefault();
             }
         }
@@ -243,9 +245,12 @@ class AutosizeInput extends React.Component {
      * @param {Event} event - an event representing the user pasting text into the input
      */
     onPaste(event) {
+        const { characterLimit } = this.props;
+
         event.preventDefault();
         const text = event.clipboardData.getData('text/plain');
-        event.target.textContent += text;
+        const charactersLeft = characterLimit - event.target.textContent.length;
+        event.target.textContent += text.slice(0, charactersLeft);
 
         this.setState({
             value: event.target.textContent,
