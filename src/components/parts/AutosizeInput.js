@@ -61,6 +61,7 @@ class AutosizeInput extends React.Component {
         this.doesInputMatchPattern = this.doesInputMatchPattern.bind(this);
         this.onFocus = this.onFocus.bind(this);
         this.onBlur = this.onBlur.bind(this);
+        this.onPaste = this.onPaste.bind(this);
     }
 
     doesInputMatchPattern(event) {
@@ -78,12 +79,6 @@ class AutosizeInput extends React.Component {
                 matchesPattern: this.doesInputMatchPattern(event)
             });
         }
-
-        console.log(this.props.pattern,
-            'matches', 
-            event.target.textContent,
-            ":",
-            this.doesInputMatchPattern(event));
     }
 
     stopNewLine(event) {
@@ -98,8 +93,11 @@ class AutosizeInput extends React.Component {
         if(event.target.textContent.length >= characterLimit) {
             if(event.code !== "Backspace" && event.code !== "Delete") {
                 event.preventDefault();
+                return false;
             }
         }
+
+        return true;
     }
 
     onKeyDown(event) {
@@ -116,6 +114,18 @@ class AutosizeInput extends React.Component {
     onBlur() {
         this.setState({
             focused: false
+        })
+    }
+
+    onPaste(event) {
+        event.preventDefault();
+        const text = event.clipboardData.getData('text/plain');
+        event.target.textContent += text;
+
+        this.setState({
+            value: event.target.textContent,
+            placeholderShown: event.target.textContent === "" ? true : false,
+            matchesPattern: this.doesInputMatchPattern(event)
         })
     }
 
@@ -141,6 +151,7 @@ class AutosizeInput extends React.Component {
                     onKeyDown={this.onKeyDown}
                     onFocus={this.onFocus} 
                     onBlur={this.onBlur}
+                    onPaste={this.onPaste}
                     />
                 <Placeholder className="label">
                     {placeholderShown ? placeholder : ''}
