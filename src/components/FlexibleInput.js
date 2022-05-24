@@ -2,14 +2,13 @@ import React from "react";
 import styled from "styled-components";
 
 const Input = styled.input`
-    width: ${props => props.length}ch;
-    max-width: ${props => props.max}px;
+    width: ${props => props.inputLength}ch;
 
     font-family: monospace;
     font-size: ${props => props.fontSize}rem;
     border: none;
     border-bottom: 2px solid black;
-    padding: .5em .5em;
+    padding: 10px 20px;
 
     &:focus {
         outline: none;
@@ -26,9 +25,11 @@ class FlexibleInput extends React.Component {
             value: '',
             inputLength: this.props.placeholder.length
         }
+        console.log(this.props.placeholder.length)
     }
 
     onInputChange = (event) => {
+        
         const {placeholder} = this.props; 
 
         this.setState({
@@ -41,18 +42,17 @@ class FlexibleInput extends React.Component {
     }
 
     render() {
-        const { id, name, placeholder, fontSize, maxWidth, maxCharacters} = this.props;
+        const { id, name, placeholder, fontSize, maxCharacters} = this.props;
 
         return (
             <Input
-                length={this.state.inputLength}
+                inputLength={this.state.inputLength}
                 fontSize={fontSize}
-                max={maxWidth}
                 maxLength={maxCharacters}
                 type="text" 
                 name={name} 
                 id={id}
-                onInput={this.onInputChange}
+                onChange={this.onInputChange}
                 placeholder={placeholder}
                 autoFocus />
         );
@@ -64,7 +64,6 @@ FlexibleInput.defaultProps = {
     id: 'flex-input',
     placeholder: "",
     fontSize: 1,
-    maxWidth: 100,
     maxCharacters: 524288
 }
 
