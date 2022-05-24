@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import CheckCircleIcon from './../../images/check_circle.svg';
 
 const InputWrapper = styled.div`
+    max-width: 100%;
     display: flex;
     align-items: center;
     position: relative;
@@ -20,14 +21,15 @@ const Placeholder = styled.div`
 
 const ValidityIcon = styled.img`
     position: absolute;
-    right: 10px;
+    left: calc(${props => props.distance}ch + 5px);
     pointer-events: none;
     width: ${props => props.iconWidth}rem;
     filter: invert(96%) sepia(81%) saturate(3047%) hue-rotate(79deg) brightness(96%) contrast(112%);
 `;
 
 const Input = styled.span`
-    min-width: calc(${props => props.len}ch + 25px);
+    min-width: calc(${props => props.len}ch + ${props=>props.spaceForIcon}rem);
+    max-width: 100%;
     border: none;
     outline: none;
     border-bottom: 2px solid lightgrey;
@@ -102,11 +104,15 @@ class AutosizeInput extends React.Component {
 
     render() {
         const {placeholder, fontSize} = this.props;
+        const {value, placeholderShown, matchesPattern} = this.state;
+
+        let elementLength = value.length >= placeholder.length ? value.length : placeholder.length;
 
         return(
             <InputWrapper fontSize={fontSize}>
                 <Input 
-                    len={placeholder.length}
+                    len={elementLength}
+                    spaceForIcon={fontSize}
                     role='textbox' 
                     inputMode="text"
                     contentEditable
@@ -115,10 +121,10 @@ class AutosizeInput extends React.Component {
                     onKeyDown={this.onKeyDown}
                     autoFocus />
                 <Placeholder className="label">
-                    {this.state.placeholderShown ? placeholder : ''}
+                    {placeholderShown ? placeholder : ''}
                 </Placeholder>
-                {this.state.matchesPattern ? 
-                    <ValidityIcon src={CheckCircleIcon} iconWidth={fontSize}/> : <div></div>}
+                {matchesPattern && !placeholderShown ? 
+                    <ValidityIcon src={CheckCircleIcon} iconWidth={fontSize} distance={elementLength}/> : <div></div>}
             </InputWrapper>
         );
     }
