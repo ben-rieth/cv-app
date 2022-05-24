@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import AddSectionDropdown from "../AddSectionDropdown";
+
+import AddSectionDropdown from "../parts/AddSectionDropdown";
+import EducationSection from "./main-sections/Education";
 
 const MainContainer = styled.div`
     border: 1px solid red;
@@ -56,7 +58,7 @@ class Main extends React.Component {
 
         return(
             <MainContainer>
-                {sections}
+                <EducationSection />
                 <AddSectionDropdown 
                     options={options}
                 />

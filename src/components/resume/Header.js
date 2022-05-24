@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import AutosizeInput from "../AutosizeInput";
+
+import AutosizeInput from "../parts/AutosizeInput";
 
 const HeaderContainer = styled.div`
     border: 1px solid blue;
@@ -15,8 +16,8 @@ class Header extends React.Component {
     render() {
         return(
             <HeaderContainer>
-                <AutosizeInput placeholder="First and Last Name" fontSize={1.75} initialValue=""/>
-                <AutosizeInput placeholder="Current Occupation" fontSize={.8} initialValue=""/>
+                <AutosizeInput placeholder="First and Last Name" fontSize={1.75} pattern={/abc/} icon={false} />
+                <AutosizeInput placeholder="Current Occupation" fontSize={.8} pattern={/abc/} icon={false}/>
             </HeaderContainer>
         );
     }
