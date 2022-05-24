@@ -47,20 +47,40 @@ class AutosizeInput extends React.Component {
         };
 
         this.onInputChange = this.onInputChange.bind(this);
+        this.onKeyDown = this.onKeyDown.bind(this);
+        this.stopIfPastCharacterMax = this.stopIfPastCharacterMax.bind(this);
     }
 
     onInputChange(event) {
+        const { characterLimit } = this.props;
 
-        this.setState({
-            value: event.target.textContent,
-            placeholderShown: event.target.textContent === "" ? true : false
-        });
+        if (event.target.textContent.length < characterLimit) {
+            this.setState({
+                value: event.target.textContent,
+                placeholderShown: event.target.textContent === "" ? true : false
+            });
+        }
     }
 
     stopNewLine(event) {
         if (event.code === "Enter") {
             event.preventDefault();
         }
+    }
+
+    stopIfPastCharacterMax(event) {
+        const { characterLimit } = this.props;
+
+        if(event.target.textContent.length >= characterLimit) {
+            if(event.code !== "Backspace" && event.code !== "Delete") {
+                event.preventDefault();
+            }
+        }
+    }
+
+    onKeyDown(event) {
+        this.stopNewLine(event);
+        this.stopIfPastCharacterMax(event);
     }
 
     render() {
@@ -75,7 +95,7 @@ class AutosizeInput extends React.Component {
                     contentEditable
                     suppressContentEditableWarning="true"
                     onInput={this.onInputChange}
-                    onKeyDown={this.stopNewLine}
+                    onKeyDown={this.onKeyDown}
                     autoFocus />
                 <Placeholder className="label">
                     {this.state.placeholderShown ? placeholder : ''}
@@ -89,7 +109,8 @@ class AutosizeInput extends React.Component {
 AutosizeInput.defaultProps = {
     placeholder: '',
     fontSize: 1,
-    initialValue: ""
+    initialValue: "",
+    characterLimit: 100
 }
 
 export default AutosizeInput;

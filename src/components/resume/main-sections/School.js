@@ -17,7 +17,7 @@ class SchoolSubSection extends React.Component {
     render() {
         return (
             <SchoolContainer>
-                <AutosizeInput placeholder="Degree Name" fontSize={1.2}/>
+                <AutosizeInput placeholder="Degree Name" fontSize={1.2} />
                 <AutosizeInput placeholder="School Name" fontSize={1}/>
                 <div>
                     <AutosizeInput placeholder="Start Date" fontSize={.75}/>

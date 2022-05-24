@@ -15,7 +15,7 @@ class Header extends React.Component {
     render() {
         return(
             <HeaderContainer>
-                <AutosizeInput placeholder="First and Last Name" fontSize={1.75} initialValue=""/>
+                <AutosizeInput placeholder="First and Last Name" fontSize={1.75} characterLimit={5}/>
                 <AutosizeInput placeholder="Current Occupation" fontSize={.8} initialValue=""/>
             </HeaderContainer>
         );
