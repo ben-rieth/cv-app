@@ -9,10 +9,13 @@ import ErrorIcon from './../../images/error.svg';
  * @property {number} len - the length of the current value
  * @property {number} fontSize - the font size of the input, also used to leave space for the icon at the end of the input
  * @property {boolean} focused - whether or not the input is focused
+ * @property {boolean} leaveSpaceForIcon - whether or not to leave space for the icon at the end of the input line
+ * @property {boolean} addLip - whether or not to add a little extra line space to the end
  */
 const InputWrapper = styled.div`
     width: calc(${props => props.len}ch + 
-        ${props=>props.leaveSpaceForIcon ? props.fontSize : 0}rem + 10px);
+        ${props=>props.leaveSpaceForIcon ? props.fontSize : 0}rem + 
+        ${props=>props.addLip ? 10 : 0}px);
     max-width: 95%;
     display: flex;
     align-items: center;
@@ -160,6 +163,7 @@ class AutosizeInput extends React.Component {
      */
     doesInputMatchPattern(event) {
         const {pattern} = this.props;
+        console.log(pattern.test(event.target.textContent));
         return pattern.test(event.target.textContent);    
     }
 
@@ -171,7 +175,7 @@ class AutosizeInput extends React.Component {
     onInputChange(event) {
         const { characterLimit } = this.props;
 
-        if (event.target.textContent.length < characterLimit) {
+        if (event.target.textContent.length <= characterLimit) {
             this.setState({
                 value: event.target.textContent,
                 placeholderShown: event.target.textContent === "" ? true : false,
@@ -200,7 +204,7 @@ class AutosizeInput extends React.Component {
         const { characterLimit } = this.props;
 
         if(event.target.textContent.length >= characterLimit) {
-            if(event.code !== "Backspace" && event.code !== "Delete") {
+            if(event.code !== "Backspace" && event.code !== "Delete" && event.code !== "Tab" ) {
                 event.preventDefault();
             }
         }
@@ -255,7 +259,7 @@ class AutosizeInput extends React.Component {
      * @returns {Component} 
      */
     render() {
-        const {placeholder, fontSize, icon, inputType, invalidMessage} = this.props;
+        const {placeholder, fontSize, icon, inputType, invalidMessage, addLip} = this.props;
         const {value, placeholderShown, matchesPattern, focused} = this.state;
 
         //the width of the input is set to the text length of the value if it is longer than the length of the placeholder
@@ -268,6 +272,7 @@ class AutosizeInput extends React.Component {
                     len={elementLength}                      //the width of the input text
                     focused={focused}                        //whether or not the element is focused
                     leaveSpaceForIcon={icon}                 //whether or not the input should leave room for the validity marker       
+                    addLip={addLip}                          //whether or not to add extra pixels at end
             >                       
                 <Input
                     len={elementLength}                      //the width of the input text
@@ -306,7 +311,8 @@ AutosizeInput.defaultProps = {
     characterLimit: 500,
     pattern: /[\s\S]*/,
     icon: true,
-    invalidMessage: "Input is not valid"
+    invalidMessage: "Input is not valid",
+    addLip: true
 }
 
 export default AutosizeInput;
