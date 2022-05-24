@@ -5,9 +5,10 @@ import CheckCircleIcon from './../../images/check_circle.svg';
 
 const InputWrapper = styled.div`
     width: calc(${props => props.len}ch + ${props=>props.spaceForIcon}rem + 5px);
-    max-width: 100%;
+    max-width: 95%;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     position: relative;
 
     font-size: ${props => props.fontSize}rem;
@@ -24,20 +25,20 @@ const Placeholder = styled.div`
 
 const ValidityIcon = styled.img`
     position: absolute;
-    left: min(calc(${props => props.distance}ch + 5px), 95%);
+    left: min(calc(${props => props.distance}ch + 5px), 100%);
     pointer-events: none;
     width: ${props => props.iconWidth}rem;
     filter: invert(96%) sepia(81%) saturate(3047%) hue-rotate(79deg) brightness(96%) contrast(112%);
 `;
 
 const Input = styled.span`
-    width: ${props => props.len}ch;
-    max-width: 95%;
+    width: min(${props => props.len}ch, 100%);
     border: none;
     outline: none;
     padding: 0 0 2px 0;
     white-space: nowrap;
     overflow: hidden;
+
     ${'' /* border-bottom: 2px solid lightgrey;
     &:focus {
         border-bottom: 2px solid dodgerblue;
