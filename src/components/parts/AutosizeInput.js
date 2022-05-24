@@ -46,6 +46,10 @@ const ValidityIcon = styled.img`
     filter: invert(96%) sepia(81%) saturate(3047%) hue-rotate(79deg) brightness(96%) contrast(112%);
 `;
 
+/**
+ * A StyledComponent div for the invalid input display
+ * @property {number} offset - the offset from the top of the container
+ */
 const InvalidMessageDisplay = styled.div`
     position: absolute;
     display: flex;
