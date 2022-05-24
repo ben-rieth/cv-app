@@ -1,8 +1,9 @@
 import React from "react";
 import styled from "styled-components";
+import uniqid from "uniqid";
 
 import AddSectionDropdown from "../parts/AddSectionDropdown";
-import EducationSection from "./main-sections/Education";
+import MainSection from "./main-sections/MainSection";
 
 const MainContainer = styled.div`
     border: 1px solid red;
@@ -15,22 +16,22 @@ class Main extends React.Component {
         {
             optionName: "Education",
             id: 1,
-            onSelectOption: () => this.createSection("Education")
+            onSelectOption: () => this.createSection("Education", "Degree")
         },
         {
             optionName: "Work Experience",
             id: 2,
-            onSelectOption: () => this.createSection("Work Experience")
+            onSelectOption: () => this.createSection("Work Experience", "Position")
         },
         {
             optionName: "Projects",
             id: 3,
-            onSelectOption: () => this.createSection("Projects")
+            onSelectOption: () => this.createSection("Projects", "Project")
         },
         {
             optionName: "Achievements",
             id: 4,
-            onSelectOption: () => this.createSection("Achievements")
+            onSelectOption: () => this.createSection("Achievements", "Achievement")
         }
     ]
 
@@ -45,9 +46,9 @@ class Main extends React.Component {
         this.createSection = this.createSection.bind(this);
     }
 
-    createSection(sectionType) {
+    createSection(sectionType, subName) {
         this.setState({
-            sections: this.state.sections.concat(<h1 key={sectionType}>{sectionType}</h1>),
+            sections: this.state.sections.concat(<MainSection key={uniqid()} name={sectionType} subsectionName={subName}/>),
             options: this.state.options.filter(option => option.optionName !== sectionType)
         });
     }
@@ -58,7 +59,7 @@ class Main extends React.Component {
 
         return(
             <MainContainer>
-                <EducationSection />
+                {sections}
                 <AddSectionDropdown 
                     options={options}
                 />
