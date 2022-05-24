@@ -2,6 +2,7 @@ import React from "react";
 import styled from 'styled-components';
 
 import CheckCircleIcon from './../../images/check_circle.svg';
+import ErrorIcon from './../../images/error.svg';
 
 /**
  * A StyledComponent div which contains the input, placeholder, and validity icon
@@ -18,7 +19,6 @@ const InputWrapper = styled.div`
     position: relative;
 
     font-size: ${props => props.fontSize}rem;
-    font-family: monospace;
 
     border-bottom: ${props => props.focused ? '2px solid dodgerblue' : '2px solid lightgrey'}
 `;
@@ -30,6 +30,7 @@ const Placeholder = styled.div`
     opacity: 0.3;
     position: absolute;
     pointer-events: none;
+    font-family: monospace;
 `;
 
 /**
@@ -44,6 +45,53 @@ const ValidityIcon = styled.img`
     width: ${props => props.iconWidth}rem;
     filter: invert(96%) sepia(81%) saturate(3047%) hue-rotate(79deg) brightness(96%) contrast(112%);
 `;
+
+const InvalidMessageDisplay = styled.div`
+    position: absolute;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    z-index: 1;
+    top: calc(${props => props.offset}rem + 20px);
+    background-color: white;
+    color: red;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,.5);
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 2px 10px;
+    font-size: 1rem;
+
+    & > img {
+        width: 1rem;
+        filter: invert(16%) sepia(80%) saturate(6167%) hue-rotate(357deg) brightness(90%) contrast(125%);
+    }
+
+    &:before, &:after {
+        content: "";
+        width: 0px;
+        height: 0px;
+        position: absolute;
+    }
+
+    &:before {
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+        border-top: 10px solid transparent;
+        border-bottom: 10px solid black;
+        left: 5%;
+        top: -21px;
+    }
+
+    &:after {
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+        border-top: 10px solid transparent;
+        border-bottom: 10px solid #fff;
+        left: 5%;
+        top: -20px;
+    }
+`;
+
 /**
  * A StyledComponent span for the input
  * @property {number} len - the length of the placeholder or the current input value, whichever is longer
@@ -55,6 +103,7 @@ const Input = styled.span`
     padding: 0 0 2px 0;
     white-space: nowrap; /* makes sure that the input cannot become more than one line*/
     overflow: hidden;
+    font-family: monospace;
 `;
 
 /**
@@ -201,7 +250,7 @@ class AutosizeInput extends React.Component {
      * @returns {Component} 
      */
     render() {
-        const {placeholder, fontSize, icon, inputType} = this.props;
+        const {placeholder, fontSize, icon, inputType, invalidMessage} = this.props;
         const {value, placeholderShown, matchesPattern, focused} = this.state;
 
         //the width of the input is set to the text length of the value if it is longer than the length of the placeholder
@@ -231,6 +280,11 @@ class AutosizeInput extends React.Component {
                 </Placeholder>
                 {matchesPattern && !placeholderShown && icon  ? 
                     <ValidityIcon src={CheckCircleIcon} iconWidth={fontSize} distance={elementLength}/> : <div></div>}
+                {!matchesPattern && focused && !placeholderShown ? 
+                    <InvalidMessageDisplay offset={fontSize}>
+                        <img src={ErrorIcon} alt="error"/>
+                        {invalidMessage}
+                    </InvalidMessageDisplay> : <div></div>}
             </InputWrapper>
         );
     }
@@ -245,7 +299,8 @@ AutosizeInput.defaultProps = {
     initialValue: "",
     characterLimit: 500,
     pattern: /[\s\S]*/,
-    icon: true
+    icon: true,
+    invalidMessage: "Input is not valid"
 }
 
 export default AutosizeInput;
