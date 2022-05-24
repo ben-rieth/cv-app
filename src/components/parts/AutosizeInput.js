@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import CheckCircleIcon from './../../images/check_circle.svg';
 
 const InputWrapper = styled.div`
+    width: calc(${props => props.len}ch + ${props=>props.spaceForIcon}rem + 5px);
     max-width: 100%;
     display: flex;
     align-items: center;
@@ -11,6 +12,8 @@ const InputWrapper = styled.div`
 
     font-size: ${props => props.fontSize}rem;
     font-family: monospace;
+
+    border-bottom: ${props => props.focused ? '2px solid dodgerblue' : '2px solid lightgrey'}
 `;
 
 const Placeholder = styled.div`
@@ -28,16 +31,17 @@ const ValidityIcon = styled.img`
 `;
 
 const Input = styled.span`
-    width: calc(${props => props.len}ch + ${props=>props.spaceForIcon}rem + 5px);
+    width: ${props => props.len}ch;
+    max-width: 95%;
     border: none;
     outline: none;
     padding: 0 0 2px 0;
     white-space: nowrap;
     overflow: hidden;
-    border-bottom: 2px solid lightgrey;
+    ${'' /* border-bottom: 2px solid lightgrey;
     &:focus {
         border-bottom: 2px solid dodgerblue;
-    }
+    } */}
 `;
 
 class AutosizeInput extends React.Component {
@@ -55,6 +59,8 @@ class AutosizeInput extends React.Component {
         this.onKeyDown = this.onKeyDown.bind(this);
         this.stopIfPastCharacterMax = this.stopIfPastCharacterMax.bind(this);
         this.doesInputMatchPattern = this.doesInputMatchPattern.bind(this);
+        this.onFocus = this.onFocus.bind(this);
+        this.onBlur = this.onBlur.bind(this);
     }
 
     doesInputMatchPattern(event) {
@@ -115,15 +121,18 @@ class AutosizeInput extends React.Component {
 
     render() {
         const {placeholder, fontSize, icon} = this.props;
-        const {value, placeholderShown, matchesPattern} = this.state;
+        const {value, placeholderShown, matchesPattern, focused} = this.state;
 
         let elementLength = value.length >= placeholder.length ? value.length : placeholder.length;
 
         return(
-            <InputWrapper fontSize={fontSize}>
-                <Input 
-                    len={elementLength}
+            <InputWrapper 
+                    fontSize={fontSize}
+                    len={elementLength} 
                     spaceForIcon={fontSize}
+                    focused={focused}>
+                <Input
+                    len={elementLength}
                     role='textbox' 
                     inputMode="text"
                     contentEditable
@@ -148,7 +157,7 @@ AutosizeInput.defaultProps = {
     placeholder: '',
     fontSize: 1,
     initialValue: "",
-    characterLimit: 100,
+    characterLimit: 500,
     pattern: /[\s\S]*/,
     icon: true
 }
