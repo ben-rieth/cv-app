@@ -65,6 +65,7 @@ class AutosizeInput extends React.Component {
     /**
      * Constructor for creating an input
      * 
+     * @property {string}  [inputType="text"]   - controls the keyboard that the user sees
      * @property {string}  [placeholder=""]     - the string that is display before text is entered
      * @property {number}  [fontSize=1]         - the font size of the input in rem units
      * @property {string}  [initialValue=""]    - the initial value of the input before editing
@@ -200,7 +201,7 @@ class AutosizeInput extends React.Component {
      * @returns {Component} 
      */
     render() {
-        const {placeholder, fontSize, icon} = this.props;
+        const {placeholder, fontSize, icon, inputType} = this.props;
         const {value, placeholderShown, matchesPattern, focused} = this.state;
 
         //the width of the input is set to the text length of the value if it is longer than the length of the placeholder
@@ -216,7 +217,7 @@ class AutosizeInput extends React.Component {
                 <Input
                     len={elementLength}                      //the width of the input text
                     role='textbox'                           //WAI-ARIA role stating that this object is a textbox
-                    inputMode="text"                         //sets the keyboard mode of the input
+                    inputMode={inputType}                    //sets the keyboard mode of the input
                     contentEditable                          //makes the span editable
                     suppressContentEditableWarning="true"    //suppresses a warning about the content being editable
                     onInput={this.onInputChange}             //function to call when user types into input
@@ -238,6 +239,7 @@ class AutosizeInput extends React.Component {
 
 //default props, described at AutosizeInput constructor
 AutosizeInput.defaultProps = {
+    inputType: 'text',
     placeholder: '',
     fontSize: 1,
     initialValue: "",
