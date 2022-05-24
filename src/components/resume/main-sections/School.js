@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import AutosizeInput from "../../parts/AutosizeInput";
+import DateInput from "../../parts/DateInput";
 
 const SchoolContainer = styled.div`
     display: flex;
@@ -19,10 +20,11 @@ class SchoolSubSection extends React.Component {
             <SchoolContainer>
                 <AutosizeInput placeholder="Degree Name" fontSize={1.2} />
                 <AutosizeInput placeholder="School Name" fontSize={1}/>
+                
                 <div>
-                    <AutosizeInput placeholder="Start Date" fontSize={.75}/>
-                    <p> - </p>
-                    <AutosizeInput placeholder="End Date" fontSize={.75}/>
+                    <DateInput />
+                    <p>-</p>
+                    <DateInput />
                 </div>
             </SchoolContainer>
         );
