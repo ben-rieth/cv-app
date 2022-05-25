@@ -8,6 +8,15 @@ import SchoolSubSection from "./SchoolSubSection";
 
 const Container = styled.div`
     padding: 10px 20px;
+
+    & > hr {
+        border: none;
+        background-color: black;
+        height: 2px;
+        width: 100%:
+        opacity: .4;
+        margin: 5px 0;
+    }
 `;
 
 class MainSection extends React.Component {
@@ -27,7 +36,7 @@ class MainSection extends React.Component {
 
     addSection() {
         this.setState({
-            subsections: this.state.subsections.concat(<hr/>, this.getNewSection())
+            subsections: this.state.subsections.concat(this.getNewSection())
         });
     }
 
@@ -36,11 +45,14 @@ class MainSection extends React.Component {
 
         switch(name) {
             case "Education":
-                return <SchoolSubSection key={uniqid()}/>;
+                return <SchoolSubSection 
+                            key={uniqid()} />;
             case "Work Experience":
-                return <PositionSubSection keu={uniqid()} />
+                return <PositionSubSection 
+                            key={uniqid()}/>
             default:
-                return <SchoolSubSection key={uniqid()}/>
+                return <SchoolSubSection 
+                            key={uniqid()} />
         }
 
     }
@@ -51,6 +63,7 @@ class MainSection extends React.Component {
         return (
             <Container>
                 <h2>{name}</h2>
+                <hr />
                 {this.state.subsections}
                 <AddAnotherButton name={subsectionName} onClick={this.addSection}/>
             </Container>
