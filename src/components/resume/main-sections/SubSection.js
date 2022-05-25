@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import DeleteButton from "../../parts/DeleteButton";
+import AwardSubSection from "./AwardSubSection";
 import PositionSubSection from "./PositionSubSection";
 import SchoolSubSection from "./SchoolSubSection";
 
@@ -30,10 +31,17 @@ class SubSection extends React.Component {
         let subsection;
         switch(type) {
             case "Education":
-                subsection=<SchoolSubSection/>
+                subsection=<SchoolSubSection/>;
                 break;
             case "Work Experience":
-                subsection=<PositionSubSection/>
+                subsection=<PositionSubSection/>;
+                break;
+            case "Awards":
+                subsection=<AwardSubSection />;
+                break;
+            case "Projects":
+                break;
+            case "Organizations":
                 break;
             default:
                 break;

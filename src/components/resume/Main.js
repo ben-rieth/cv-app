@@ -32,6 +32,11 @@ class Main extends React.Component {
             optionName: "Achievements",
             id: 4,
             onSelectOption: () => this.createSection("Achievements", "Achievement")
+        },
+        {
+            optionName: "Awards",
+            id: 5,
+            onSelectOption: () => this.createSection("Awards")
         }
     ]
 

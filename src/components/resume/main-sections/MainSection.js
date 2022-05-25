@@ -85,7 +85,7 @@ class MainSection extends React.Component {
                                 type={name}
                                 onDelete={this.deleteSection}
                             />
-                })};
+                })}
                 <AddAnotherButton name={subsectionName} onClick={this.addSection}/>
             </Container>
         );
