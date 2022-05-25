@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import DeleteButton from "../../parts/DeleteButton";
 import AwardSubSection from "./AwardSubSection";
+import OrganizationSubSection from "./OrganizationSubSection";
 import PositionSubSection from "./PositionSubSection";
 import SchoolSubSection from "./SchoolSubSection";
 
@@ -84,6 +85,7 @@ class SubSection extends React.Component {
             case "Projects":
                 break;
             case "Organizations":
+                subsection=<OrganizationSubSection />
                 break;
             default:
                 break;

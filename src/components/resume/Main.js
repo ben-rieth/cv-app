@@ -29,14 +29,14 @@ class Main extends React.Component {
             onSelectOption: () => this.createSection("Projects", "Project")
         },
         {
-            optionName: "Achievements",
+            optionName: "Awards",
             id: 4,
-            onSelectOption: () => this.createSection("Achievements", "Achievement")
+            onSelectOption: () => this.createSection("Awards", "Award")
         },
         {
-            optionName: "Awards",
+            optionName: "Organizations",
             id: 5,
-            onSelectOption: () => this.createSection("Awards")
+            onSelectOption: () => this.createSection("Organizations", "Organization")
         }
     ]
 
