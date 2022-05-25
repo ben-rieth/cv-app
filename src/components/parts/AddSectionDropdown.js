@@ -55,12 +55,22 @@ class AddSectionDropdown extends React.Component {
             dropdownVisible: false
         }
 
-        this.showDropdownItems = this.showDropdownItems.bind(this);
+        this.toggleDropdownItems = this.toggleDropdownItems.bind(this);
+        this.onOptionClick = this.onOptionClick.bind(this);
     }
 
-    showDropdownItems() {
+    toggleDropdownItems() {
         this.setState({
             dropdownVisible: !this.state.dropdownVisible
+        });
+    }
+
+    onOptionClick(clickedOptionId) {
+        let selectedOption = this.props.options.filter(option => option.id === clickedOptionId)[0];
+        selectedOption.onSelectOption();
+
+        this.setState({
+            dropdownVisible: false
         });
     }
 
@@ -68,13 +78,13 @@ class AddSectionDropdown extends React.Component {
         const {options} = this.props;
         return(
             <DropdownContainer>
-                <DropButton onClick={this.showDropdownItems}>
+                <DropButton onClick={this.toggleDropdownItems}>
                     <img src={AddIcon} alt="add" />
                     <p>Add Main Section</p>
                 </DropButton>
                 <DropdownContent visible={this.state.dropdownVisible}>
                     {options.map((option) => {
-                        return <button key={option.id} onClick={option.onSelectOption}>
+                        return <button key={option.id} onClick={() => this.onOptionClick(option.id)}>
                             {option.optionName}
                         </button>
                     })};
