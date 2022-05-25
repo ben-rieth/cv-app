@@ -3,7 +3,8 @@ import styled from "styled-components";
 import uniqid from 'uniqid';
 
 import AddAnotherButton from "../../parts/AddAnotherButton";
-import SchoolSubSection from "./School";
+import PositionSubSection from "./PositionSubSection";
+import SchoolSubSection from "./SchoolSubSection";
 
 const Container = styled.div`
     padding: 10px 20px;
@@ -37,7 +38,7 @@ class MainSection extends React.Component {
             case "Education":
                 return <SchoolSubSection key={uniqid()}/>;
             case "Work Experience":
-                return <div></div>
+                return <PositionSubSection keu={uniqid()} />
             default:
                 return <SchoolSubSection key={uniqid()}/>
         }
