@@ -43,27 +43,28 @@ class MainSection extends React.Component {
         this.deleteSection = this.deleteSection.bind(this);
     }
 
+    componentDidUpdate() {
+        const {onDelete, id} = this.props;
+
+        if(this.state.subsections.length <= 0) {
+            onDelete(id);
+        }
+    }
+
     addSection() {
-        this.setState({
-            subsections: this.state.subsections.concat(
+        this.setState((state) => ({
+            subsections: state.subsections.concat(
                 {
                     id: uniqid()
                 }
             )
-        });
+        }));
     }
 
     deleteSection(sectionToDelete) {
-        const {onDelete, id} = this.props;
-        
-
         this.setState((state) => ({
             subsections: state.subsections.filter(subsection => subsection.id !== sectionToDelete)
         }));
-
-        if(this.state.subsections.length === 0) {
-            onDelete(id);
-        }
     }
 
     render() {
