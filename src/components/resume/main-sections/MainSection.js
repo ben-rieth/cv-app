@@ -3,8 +3,6 @@ import styled from "styled-components";
 import uniqid from 'uniqid';
 
 import AddAnotherButton from "../../parts/AddAnotherButton";
-import PositionSubSection from "./PositionSubSection";
-import SchoolSubSection from "./SchoolSubSection";
 import DeleteButton from "../../parts/DeleteButton";
 import SubSection from "./SubSection";
 
