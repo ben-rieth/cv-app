@@ -16,13 +16,15 @@ const ButtonContainer = styled.img`
 class DeleteButton extends React.Component {
 
     render() {
-        const {onClick} = this.props;
+        const {onClick, onMouseEnter, onMouseLeave} = this.props;
         
         return(
             <ButtonContainer 
                 src={DeleteIcon}
                 alt="delete"
                 onClick={onClick}
+                onMouseEnter={onMouseEnter}
+                onMouseLeave={onMouseLeave}
             />
         );
     }

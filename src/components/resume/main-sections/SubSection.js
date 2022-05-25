@@ -9,6 +9,8 @@ const SubSectionContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
+    position: relative;
+    padding: 0 5px;
 
     & > .subsection-form {
         display: flex;
@@ -22,11 +24,51 @@ const SubSectionContainer = styled.div`
             gap: 5px;
         }
     }
+
+    & > .delete {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-color: red;
+        opacity: 0.2;
+        top: 0;
+        left: -1px;
+        pointer-events: none;
+    } 
+
+    & > .blank {
+        position: absolute;
+    }  
 `;
 
 class SubSection extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            hoveringOverDelete: false
+        }
+
+        this.overDeleteButton = this.overDeleteButton.bind(this);
+        this.leaveDeleteBUtton = this.leaveDeleteBUtton.bind(this);
+    }
+
+    overDeleteButton() {
+        this.setState({
+            hoveringOverDelete: true
+        });
+    }
+
+    leaveDeleteBUtton() {
+        this.setState({
+            hoveringOverDelete: false
+        })
+    }
+
     render() {
         const { type, id, onDelete } = this.props;
+        const {hoveringOverDelete} = this.state;
+
 
         let subsection;
         switch(type) {
@@ -53,7 +95,13 @@ class SubSection extends React.Component {
                 <DeleteButton 
                     onClick={() => {
                         onDelete(id)
-                    }} />       
+                    }} 
+                    onMouseEnter={this.overDeleteButton}
+                    onMouseLeave={this.leaveDeleteBUtton}
+                    />    
+                {hoveringOverDelete ? 
+                    <div className="delete"></div> :
+                    <div className="blank"></div> }
             </SubSectionContainer>
         );
     }
