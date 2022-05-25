@@ -8,7 +8,7 @@ class AwardSubSection extends React.Component {
                 <div className="row">
                     <AutosizeInput placeholder="Name of Award" fontSize={1.2} />
                     <p>·</p>
-                    <AutosizeInput placeholder="yyyy" fontSize={1.2} addLip={false}/>
+                    <AutosizeInput placeholder="yyyy" fontSize={1.2} addLip={false} characterLimit={4} pattern={/[1-2]\d{3}/}/>
                 </div>
                 <AutosizeInput placeholder="Awarding Organization" fontSize={.8}/>
             </div>
