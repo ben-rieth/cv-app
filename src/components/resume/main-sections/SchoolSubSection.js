@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import AutosizeInput from "../../parts/AutosizeInput";
-import DateInput from "../../parts/DateInput";
 import StartEndDateInput from "../../parts/StartEndDateInput";
 
 const SchoolContainer = styled.div`

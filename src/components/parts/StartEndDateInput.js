@@ -7,17 +7,26 @@ const DateContainer = styled.div`
     align-items: center;
     gap: 5px;
 
-    & > input {
-        margin: 0 0 0 10px;
+    & > .present {
+        border-bottom: 2px solid lightgrey;
+        font-size: .75rem;
+        padding: 0 .75ch;
     }
+`;
 
-    & > label, & > p {
+const PresentContainer = styled.div`
+    display: flex;
+    align-items:center;
+    gap: 2px;
+
+    & > label {
         font-size: .75rem;
     }
 
-    & > .present {
-        border-bottom: 2px solid lightgrey;
+    & > input {
+        margin: 0 0 0 5px;
     }
+
 `;
 
 class StartEndDateInput extends React.Component {
@@ -39,6 +48,7 @@ class StartEndDateInput extends React.Component {
 
     render() {
         const {isEndDatePresent} = this.state;
+        const {allowPresent} = this.props;
 
         return (
             <DateContainer>
@@ -46,12 +56,18 @@ class StartEndDateInput extends React.Component {
                 <p>-</p>
                 {isEndDatePresent ? 
                     <p className="present">Present</p> : <DateInput />}
-
-                <input type="checkbox" id="present-checkbox" onClick={this.onClick}/>
-                <label for="present-checkbox">Present?</label>
+                {allowPresent ? 
+                    <PresentContainer>
+                        <input type="checkbox" id="present-checkbox" onClick={this.onClick}/>
+                        <label for="present-checkbox">Present?</label>
+                    </PresentContainer> : <div></div>}
             </DateContainer>
         );
     }
+}
+
+StartEndDateInput.defaultProps = {
+    allowPresent: true
 }
 
 export default StartEndDateInput;
