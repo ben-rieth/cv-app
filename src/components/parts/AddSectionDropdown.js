@@ -1,4 +1,4 @@
-import React, {ReactDOM} from "react";
+import React from "react";
 import styled from 'styled-components';
 
 import AddIcon from './../../images/add.svg';
@@ -18,12 +18,12 @@ const DropdownContent = styled.div`
     z-index: 1;
     width: 100%;
     background-color: transparent;
-    
 
     & > button {
         color: black;
         padding: 12px 16px;
         width: 100%;
+        cursor: pointer;
     }
 `;
 
@@ -95,7 +95,7 @@ class AddSectionDropdown extends React.Component {
                         return <button key={option.id} onClick={() => this.onOptionClick(option.id)}>
                             {option.optionName}
                         </button>
-                    })};
+                    })}
                 </DropdownContent>
             </DropdownContainer>
         )
