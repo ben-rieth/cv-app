@@ -315,7 +315,7 @@ AutosizeInput.defaultProps = {
     initialValue: "",
     characterLimit: 500,
     pattern: /[\s\S]*/,
-    icon: true,
+    icon: false,
     invalidMessage: "Input is not valid",
     addLip: true
 }
