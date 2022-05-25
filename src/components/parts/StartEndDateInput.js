@@ -59,7 +59,7 @@ class StartEndDateInput extends React.Component {
                 {allowPresent ? 
                     <PresentContainer>
                         <input type="checkbox" id="present-checkbox" onClick={this.onClick}/>
-                        <label for="present-checkbox">Present?</label>
+                        <label htmlFor="present-checkbox">Present?</label>
                     </PresentContainer> : <div></div>}
             </DateContainer>
         );
