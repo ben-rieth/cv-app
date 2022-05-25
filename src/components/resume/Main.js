@@ -1,4 +1,5 @@
 import React from "react";
+import { flushSync } from "react-dom";
 import styled from "styled-components";
 import uniqid from "uniqid";
 
@@ -44,13 +45,36 @@ class Main extends React.Component {
         }
 
         this.createSection = this.createSection.bind(this);
+        this.deleteSection = this.deleteSection.bind(this);
     }
 
     createSection(sectionType, subName) {
+        const sectionId = uniqid();
         this.setState({
-            sections: this.state.sections.concat(<MainSection key={uniqid()} name={sectionType} subsectionName={subName}/>),
+            sections: this.state.sections.concat(
+                {
+                    id: sectionId,
+                    name: sectionType,
+                    subName: subName
+                }
+            ),
             options: this.state.options.filter(option => option.optionName !== sectionType)
         });
+    }
+
+    deleteSection(sectionToDelete) {
+
+        this.setState((state) => ({
+            sections: state.sections.filter(section => section.id !== sectionToDelete),
+        }));
+
+        this.setState((state) => ({
+            options: this.dropdownOptions.filter(option => {
+                return !state.sections.map(section => {
+                    return section.name;
+                }).includes(option.optionName)
+            }),
+        }));
     }
 
     render() {
@@ -59,7 +83,14 @@ class Main extends React.Component {
 
         return(
             <MainContainer>
-                {sections}
+                {sections.map((section) => {
+                    return <MainSection 
+                                key={section.id}
+                                id={section.id} 
+                                name={section.name} 
+                                subsectionName={section.subName}
+                                onDelete={this.deleteSection} />
+                })}
                 <AddSectionDropdown 
                     options={options}
                 />
