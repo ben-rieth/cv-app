@@ -5,6 +5,7 @@ import uniqid from 'uniqid';
 import AddAnotherButton from "../../parts/AddAnotherButton";
 import PositionSubSection from "./PositionSubSection";
 import SchoolSubSection from "./SchoolSubSection";
+import DeleteButton from "../../parts/DeleteButton";
 
 const Container = styled.div`
     padding: 10px 20px;
@@ -16,6 +17,11 @@ const Container = styled.div`
         width: 100%:
         opacity: .4;
         margin: 5px 0;
+    }
+
+    & > .header {
+        display: flex;
+        align-items: center;
     }
 `;
 
@@ -58,11 +64,17 @@ class MainSection extends React.Component {
     }
 
     render() {
-        const {name, subsectionName} = this.props;
+        const {name, id, subsectionName, onDelete} = this.props;
 
         return (
             <Container>
-                <h2>{name}</h2>
+                <div className="header">
+                    <h2>{name}</h2>
+                    <DeleteButton
+                        onClick={() => {
+                            onDelete(id);
+                        }} />
+                </div>
                 <hr />
                 {this.state.subsections}
                 <AddAnotherButton name={subsectionName} onClick={this.addSection}/>
