@@ -1,4 +1,4 @@
-import React from "react";
+import React, {ReactDOM} from "react";
 import styled from 'styled-components';
 
 import AddIcon from './../../images/add.svg';
@@ -55,8 +55,10 @@ class AddSectionDropdown extends React.Component {
             dropdownVisible: false
         }
 
+        this.onMouseLeave = this.onMouseLeave.bind(this);
         this.toggleDropdownItems = this.toggleDropdownItems.bind(this);
         this.onOptionClick = this.onOptionClick.bind(this);
+        
     }
 
     toggleDropdownItems() {
@@ -74,10 +76,16 @@ class AddSectionDropdown extends React.Component {
         });
     }
 
+    onMouseLeave() {
+        this.setState({
+            dropdownVisible: false
+        });
+    }
+
     render() {
         const {options} = this.props;
         return(
-            <DropdownContainer>
+            <DropdownContainer onMouseLeave={this.onMouseLeave} >
                 <DropButton onClick={this.toggleDropdownItems}>
                     <img src={AddIcon} alt="add" />
                     <p>Add Main Section</p>
