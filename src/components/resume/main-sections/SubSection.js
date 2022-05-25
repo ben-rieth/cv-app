@@ -13,12 +13,14 @@ const SubSectionContainer = styled.div`
     justify-content: space-between;
     position: relative;
     padding: 0 5px;
+    max-width: 100%;
 
     & > .subsection-form {
         display: flex;
         flex-direction: column;
         gap: 2px;
         margin-bottom: 10px;
+        max-width: 92%;
 
         & > .row {
             display: flex;

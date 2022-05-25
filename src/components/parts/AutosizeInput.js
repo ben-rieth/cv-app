@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import CheckCircleIcon from './../../images/check_circle.svg';
 import ErrorIcon from './../../images/error.svg';
+import DeleteIcon from './../../images/delete.svg';
 
 /**
  * A StyledComponent div which contains the input, placeholder, and validity icon
@@ -15,7 +16,7 @@ import ErrorIcon from './../../images/error.svg';
 const InputWrapper = styled.div`
     width: calc(${props => props.len}ch + 
         ${props=>props.leaveSpaceForIcon ? props.fontSize : 0}rem + 
-        ${props=>props.addLip ? 10 : 0}px);
+        ${props=>props.addLip ? 5 : 0}ch);
     max-width: 95%;
     display: flex;
     align-items: center;
@@ -38,16 +39,36 @@ const Placeholder = styled.div`
 `;
 
 /**
- * A StyledComponent img for the validity icon
+ * A StyledComponent img for the icon
  * @property {number} iconWidth - the width of the icon, set the the fontSize of the input
  * @property {number} distance - the length of the input, makes sure the icon always stays at the edge of the input
+ * @property {string} type - the type of icon to be displayed
  */
-const ValidityIcon = styled.img`
+const Icon = styled.img`
+    ${({type}) => {
+        switch(type) {
+            case "valid":
+                return `
+                    content: url(${CheckCircleIcon});
+                    filter: invert(96%) sepia(81%) saturate(3047%) hue-rotate(79deg) brightness(96%) contrast(112%);`;
+            case "delete":
+                return `
+                    content: url(${DeleteIcon});
+                    filter: invert(17%) sepia(73%) saturate(7442%) hue-rotate(356deg) brightness(101%) contrast(129%);`;
+            default:
+                return `content: url(${CheckCircleIcon});`;
+
+        }
+    }}
     position: absolute;
-    left: min(calc(${props => props.distance}ch + 5px), 100%);
-    pointer-events: none;
-    width: ${props => props.iconWidth}rem;
-    filter: invert(96%) sepia(81%) saturate(3047%) hue-rotate(79deg) brightness(96%) contrast(112%);
+    left: min(calc(${props => props.distance}ch + 5ch), 100%);
+    width: ${props => props.iconWidth < 1 ? 1 : props.iconWidth}rem;
+
+    &:hover {
+        ${props => props.type === "delete" ?
+            "cursor: pointer; transform: scale(1.2);" : ""
+        }
+    }
 `;
 
 /**
@@ -109,7 +130,7 @@ const Input = styled.span`
     border: none;
     outline: none;
     padding: 0 0 2px 0;
-    white-space: nowrap; /* makes sure that the input cannot become more than one line*/
+    white-space: ${props => props.allowMultipleLines ? 'break-space' : 'nowrap'}; 
     overflow: hidden;
     font-family: monospace;
 `;
@@ -129,7 +150,10 @@ class AutosizeInput extends React.Component {
      * @property {number}  [characterLimit=500] - the maximum amount of characters the input will allow
      * @property {regex}   [pattern='[\s\S]*']  - the regex pattern the string must match
      * @property {boolean} [icon=true]          - whether or not the validity icon is displayed
-     * 
+     * @property {string}  [invalidMessage]     - the message that displays when an invalid input is entered
+     * @property {boolean} [addLip=true]        - whether or not to add a little extra space to the end of the input line
+     * @property {boolean} [allowMultipleLines] - whether or not the input is allowed to be more than one line
+     *
      * @param {object}  state                   - the React state object for this component
      * @param {string}  state.value             - the current value of the input
      * @param {boolean} state.placeholderShown  - whether or not the placeholder is currently shown
@@ -163,7 +187,6 @@ class AutosizeInput extends React.Component {
      */
     doesInputMatchPattern(event) {
         const {pattern} = this.props;
-        console.log(pattern.test(event.target.textContent));
         return pattern.test(event.target.textContent);    
     }
 
@@ -264,23 +287,33 @@ class AutosizeInput extends React.Component {
      * @returns {Component} 
      */
     render() {
-        const {placeholder, fontSize, icon, inputType, invalidMessage, addLip} = this.props;
+        const {placeholder, fontSize, icon, inputType, invalidMessage, addLip, allowMultipleLines, onIconClick} = this.props;
         const {value, placeholderShown, matchesPattern, focused} = this.state;
 
         //the width of the input is set to the text length of the value if it is longer than the length of the placeholder
         //this is so that the minimum length of the input is always the length of the placeholder
         let elementLength = value.length >= placeholder.length ? value.length : placeholder.length;
 
+        let showIcon;
+        if (icon === "valid") {
+            showIcon = matchesPattern && !placeholderShown;
+        } else if (icon === "delete") {
+            showIcon = true;
+        } else {
+            showIcon = false;
+        }
+
         return(
             <InputWrapper 
                     fontSize={fontSize}                      //the font size of the element
                     len={elementLength}                      //the width of the input text
                     focused={focused}                        //whether or not the element is focused
-                    leaveSpaceForIcon={icon}                 //whether or not the input should leave room for the validity marker       
+                    leaveSpaceForIcon={icon !== "none"}                 //whether or not the input should leave room for the validity marker       
                     addLip={addLip}                          //whether or not to add extra pixels at end
             >                       
                 <Input
-                    len={elementLength}                      //the width of the input text
+                    len={elementLength}   
+                    allowMultipleLines={allowMultipleLines}                   //the width of the input text
                     role='textbox'                           //WAI-ARIA role stating that this object is a textbox
                     inputMode={inputType}                    //sets the keyboard mode of the input
                     contentEditable                          //makes the span editable
@@ -294,8 +327,8 @@ class AutosizeInput extends React.Component {
                 <Placeholder className="label">
                     {placeholderShown ? placeholder : ''}
                 </Placeholder>
-                {matchesPattern && !placeholderShown && icon  ? 
-                    <ValidityIcon src={CheckCircleIcon} iconWidth={fontSize} distance={elementLength}/> : <div></div>}
+                {showIcon  ? 
+                    <Icon iconWidth={fontSize} distance={elementLength} type={icon} onClick={onIconClick}/> : <div></div>}
                 {!matchesPattern && focused && !placeholderShown ? 
                     <InvalidMessageDisplay offset={fontSize}>
                         <img src={ErrorIcon} alt="error"/>
@@ -315,9 +348,10 @@ AutosizeInput.defaultProps = {
     initialValue: "",
     characterLimit: 500,
     pattern: /[\s\S]*/,
-    icon: false,
+    icon: "none",
     invalidMessage: "Input is not valid",
-    addLip: true
+    addLip: true,
+    allowMultipleLines: false
 }
 
 export default AutosizeInput;

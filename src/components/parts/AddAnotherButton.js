@@ -9,31 +9,36 @@ const Button = styled.button`
     border: none;
     background-color: transparent;
     cursor: pointer;
+    margin-left: -10px;
 
     &:hover {
         transform: scale(1.05)
     }
 
     & > img {
-        width: 30px;
+        width: ${props => props.fontSize}rem;
     }  
 
     & > p {
-
+        font-size: ${props => props.fontSize}rem;
     }
 `;
 
 class AddAnotherButton extends React.Component {
     render() {
-        const { name, onClick } = this.props;
+        const { name, onClick, fontSize } = this.props;
 
         return(
-            <Button onClick={onClick}>
+            <Button onClick={onClick} fontSize={fontSize}>
                 <img src={AddIcon} alt="add" />
                 <p>{`Add Another ${name}`}</p>
             </Button>
         )
     }
+}
+
+AddAnotherButton.defaultProps = {
+    fontSize: 1
 }
 
 export default AddAnotherButton;

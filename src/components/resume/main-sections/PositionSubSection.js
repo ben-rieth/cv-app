@@ -1,5 +1,6 @@
 import React from "react";
 import AutosizeInput from "../../parts/AutosizeInput";
+import EditableBulletList from "../../parts/EditableBulletList";
 import StartEndDateInput from "../../parts/StartEndDateInput";
 
 class PositionSubSection extends React.Component {
@@ -14,6 +15,7 @@ class PositionSubSection extends React.Component {
                     <AutosizeInput placeholder="Location" fontSize={.8}/>
                 </div>
                 <StartEndDateInput />
+                <EditableBulletList fontSize={.8} placeholder="Description of Achievements or Tasks"/>
             </div>
         );
     }

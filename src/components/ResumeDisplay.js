@@ -6,13 +6,15 @@ import Sidebar from "./resume/Sidebar";
 import Main from "./resume/Main";
 
 const DisplayContainer = styled.div`
-    margin: 0 5vw;
+    margin: 0 auto;
     display: grid;
-    grid-template-columns: 1fr 2fr;
-    grid-template-rows: 1fr 5fr;
+    grid-template-columns: 33% 66%;
+    grid-template-rows: 1fr 9fr;
     grid-template-areas:
-        "header  header"
-        "sidebar main"
+        "sidebar  header"
+        "sidebar main";
+    width: clamp(700px, 90vw, 1300px);
+    aspect-ratio: 1 / 1.2941;
 `;
 
 class ResumeDisplay extends React.Component {
