@@ -4,6 +4,7 @@ import DeleteButton from "../../parts/DeleteButton";
 import AwardSubSection from "./AwardSubSection";
 import OrganizationSubSection from "./OrganizationSubSection";
 import PositionSubSection from "./PositionSubSection";
+import ProjectSubSection from "./ProjectSubSection";
 import SchoolSubSection from "./SchoolSubSection";
 
 const SubSectionContainer = styled.div`
@@ -83,6 +84,7 @@ class SubSection extends React.Component {
                 subsection=<AwardSubSection />;
                 break;
             case "Projects":
+                subsection=<ProjectSubSection />;
                 break;
             case "Organizations":
                 subsection=<OrganizationSubSection />
