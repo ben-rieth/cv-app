@@ -6,6 +6,7 @@ import AddAnotherButton from "../../parts/AddAnotherButton";
 import PositionSubSection from "./PositionSubSection";
 import SchoolSubSection from "./SchoolSubSection";
 import DeleteButton from "../../parts/DeleteButton";
+import SubSection from "./SubSection";
 
 const Container = styled.div`
     padding: 10px 20px;
@@ -32,35 +33,37 @@ class MainSection extends React.Component {
 
         this.state = {
             subsections: [
-                this.getNewSection()
+                {
+                    id: uniqid()
+                }
             ]
         }
 
         this.addSection = this.addSection.bind(this);
-        this.getNewSection = this.getNewSection.bind(this);
+        this.deleteSection = this.deleteSection.bind(this);
     }
 
     addSection() {
         this.setState({
-            subsections: this.state.subsections.concat(this.getNewSection())
+            subsections: this.state.subsections.concat(
+                {
+                    id: uniqid()
+                }
+            )
         });
     }
 
-    getNewSection() {
-        const {name} = this.props;
+    deleteSection(sectionToDelete) {
+        const {onDelete, id} = this.props;
+        
 
-        switch(name) {
-            case "Education":
-                return <SchoolSubSection 
-                            key={uniqid()} />;
-            case "Work Experience":
-                return <PositionSubSection 
-                            key={uniqid()}/>
-            default:
-                return <SchoolSubSection 
-                            key={uniqid()} />
+        this.setState((state) => ({
+            subsections: state.subsections.filter(subsection => subsection.id !== sectionToDelete)
+        }));
+
+        if(this.state.subsections.length === 0) {
+            onDelete(id);
         }
-
     }
 
     render() {
@@ -76,7 +79,14 @@ class MainSection extends React.Component {
                         }} />
                 </div>
                 <hr />
-                {this.state.subsections}
+                {this.state.subsections.map((subsection) => {
+                    return <SubSection 
+                                key={subsection.id}
+                                id={subsection.id}
+                                type={name}
+                                onDelete={this.deleteSection}
+                            />
+                })};
                 <AddAnotherButton name={subsectionName} onClick={this.addSection}/>
             </Container>
         );

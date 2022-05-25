@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import DeleteButton from "../../parts/DeleteButton";
+import PositionSubSection from "./PositionSubSection";
+import SchoolSubSection from "./SchoolSubSection";
 
 const SubSectionContainer = styled.div`
     display: flex;
@@ -23,12 +25,27 @@ const SubSectionContainer = styled.div`
 
 class SubSection extends React.Component {
     render() {
-        const { form } = this.props;
+        const { type, id, onDelete } = this.props;
+
+        let subsection;
+        switch(type) {
+            case "Education":
+                subsection=<SchoolSubSection/>
+                break;
+            case "Work Experience":
+                subsection=<PositionSubSection/>
+                break;
+            default:
+                break;
+        }
 
         return(
             <SubSectionContainer>
-                {form}
-                <DeleteButton />
+                {subsection}
+                <DeleteButton 
+                    onClick={() => {
+                        onDelete(id)
+                    }} />       
             </SubSectionContainer>
         );
     }

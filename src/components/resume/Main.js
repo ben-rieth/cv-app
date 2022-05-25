@@ -1,5 +1,4 @@
 import React from "react";
-import { flushSync } from "react-dom";
 import styled from "styled-components";
 import uniqid from "uniqid";
 
