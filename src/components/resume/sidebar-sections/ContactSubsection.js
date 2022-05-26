@@ -1,5 +1,4 @@
 import React from "react";
-import AutosizeInput from "../../parts/AutosizeInput";
 import ContactInput from "./../../parts/ContactInput";
 
 import EmailIcon from './../../../images/email.svg';
