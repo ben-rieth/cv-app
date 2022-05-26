@@ -16,7 +16,7 @@ import DeleteIcon from './../../images/delete.svg';
 const InputWrapper = styled.div`
     width: calc(${props => props.len}ch + 
         ${props=>props.leaveSpaceForIcon ? props.fontSize : 0}rem + 
-        ${props=>props.addLip ? 5 : 0}ch);
+        ${props=>props.addLip ? 1 : 0}ch);
     max-width: 95%;
     display: flex;
     align-items: center;
@@ -308,12 +308,13 @@ class AutosizeInput extends React.Component {
                     fontSize={fontSize}                      //the font size of the element
                     len={elementLength}                      //the width of the input text
                     focused={focused}                        //whether or not the element is focused
-                    leaveSpaceForIcon={icon !== "none"}                 //whether or not the input should leave room for the validity marker       
+                    leaveSpaceForIcon={icon !== "none"}      //whether or not the input should leave room for the validity marker       
                     addLip={addLip}                          //whether or not to add extra pixels at end
-            >                       
+                    >
+
                 <Input
                     len={elementLength}   
-                    allowMultipleLines={allowMultipleLines}                   //the width of the input text
+                    allowMultipleLines={allowMultipleLines}  //the width of the input text
                     role='textbox'                           //WAI-ARIA role stating that this object is a textbox
                     inputMode={inputType}                    //sets the keyboard mode of the input
                     contentEditable                          //makes the span editable
@@ -323,12 +324,21 @@ class AutosizeInput extends React.Component {
                     onFocus={this.onFocus}                   //function to call when user focuses on the input
                     onBlur={this.onBlur}                     //function to call when user unfocuses on the input
                     onPaste={this.onPaste}                   //function to call when user pastes text into the input
+                    value={value.replace(/ /g, '\u00a0')}
+
                     />
+
                 <Placeholder className="label">
-                    {placeholderShown ? placeholder : ''}
+                    {placeholderShown ? placeholder.replace(/ /g, '\u00a0') : ''}
                 </Placeholder>
+
                 {showIcon  ? 
-                    <Icon iconWidth={fontSize} distance={elementLength} type={icon} onClick={onIconClick}/> : <div></div>}
+                    <Icon 
+                        iconWidth={fontSize} 
+                        distance={elementLength} 
+                        type={icon} 
+                        onClick={onIconClick}/> : <div></div>}
+
                 {!matchesPattern && focused && !placeholderShown ? 
                     <InvalidMessageDisplay offset={fontSize}>
                         <img src={ErrorIcon} alt="error"/>
