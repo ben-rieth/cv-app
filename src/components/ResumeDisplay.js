@@ -8,7 +8,7 @@ import Main from "./resume/Main";
 const DisplayContainer = styled.div`
     margin: 0 auto;
     display: grid;
-    grid-template-columns: 33% 66%;
+    grid-template-columns: 40% 60%;
     grid-template-rows: 1fr 9fr;
     grid-template-areas:
         "sidebar  header"

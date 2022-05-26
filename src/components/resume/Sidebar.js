@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import AddSectionDropdown from "../parts/AddSectionDropdown";
+import ContactSubsection from "./sidebar-sections/ContactSubsection";
 
 const SidebarContainer = styled.div`
     border: 1px solid green;
@@ -37,6 +38,7 @@ class Sidebar extends React.Component {
 
         return(
             <SidebarContainer>
+                <ContactSubsection />
                 <AddSectionDropdown 
                     options={options}
                     header="Add Side Section"
