@@ -1,4 +1,5 @@
 import React from "react";
+import AddressInput from "../../parts/AddressInput";
 import AutosizeInput from "../../parts/AutosizeInput";
 import EditableBulletList from "../../parts/EditableBulletList";
 import StartEndDateInput from "../../parts/StartEndDateInput";
@@ -12,7 +13,7 @@ class PositionSubSection extends React.Component {
                 <div className="row" >
                     <AutosizeInput placeholder="Company Name" fontSize={.8}/>
                     <p>·</p>
-                    <AutosizeInput placeholder="Location" fontSize={.8}/>
+                    <AddressInput />
                 </div>
                 <StartEndDateInput />
                 <EditableBulletList fontSize={.8} placeholder="Description of Achievements or Tasks"/>

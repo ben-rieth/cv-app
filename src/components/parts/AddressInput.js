@@ -14,11 +14,13 @@ const InputContainer = styled.div`
 `;
 
 class AddressInput extends React.Component {
+    
 
     render() {
+        const {icon} = this.props;
         return(
             <InputContainer>
-                <img src={LocationIcon} alt="" />
+                {icon ? <img src={LocationIcon} alt="" /> : <div></div>}
                 <AutosizeInput placeholder="City Name" fontSize={.8} />
                 <p>,</p>
                 <AutosizeInput placeholder="ST" fontSize={.8} characterLimit={2} addLip={false}/>
@@ -26,6 +28,10 @@ class AddressInput extends React.Component {
         )
     }
 
+}
+
+AddressInput.defaultProps = {
+    icon: false
 }
 
 export default AddressInput;

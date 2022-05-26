@@ -11,7 +11,7 @@ class ContactSubsection extends React.Component {
             <div className="subsection-form">
                 <ContactInput iconPath={EmailIcon} example="example@email.com" />
                 <ContactInput iconPath={PhoneIcon} example="###-###-####" />
-                <AddressInput />
+                <AddressInput icon={true}/>
             </div>
         )
     }
