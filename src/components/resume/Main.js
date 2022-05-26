@@ -97,6 +97,7 @@ class Main extends React.Component {
                 })}
                 <AddSectionDropdown 
                     options={options}
+                    header="Add Main Section"
                 />
             </MainContainer>
         );

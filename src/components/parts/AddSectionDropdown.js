@@ -83,12 +83,12 @@ class AddSectionDropdown extends React.Component {
     }
 
     render() {
-        const {options} = this.props;
+        const {options, header} = this.props;
         return(
             <DropdownContainer onMouseLeave={this.onMouseLeave} >
                 <DropButton onClick={this.toggleDropdownItems}>
                     <img src={AddIcon} alt="add" />
-                    <p>Add Main Section</p>
+                    <p>{header}</p>
                 </DropButton>
                 <DropdownContent visible={this.state.dropdownVisible}>
                     {options.map((option) => {
