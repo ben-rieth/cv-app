@@ -30,4 +30,8 @@ class ContactInput extends React.Component {
     }
 }
 
+ContactInput.defaultProps = {
+    canDelete: false
+}
+
 export default ContactInput;
