@@ -2,9 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import uniqid from 'uniqid';
 
-import AddAnotherButton from "../../parts/AddAnotherButton";
-import DeleteButton from "../../parts/DeleteButton";
-import SubSection from "./SubSection";
+import AddAnotherButton from "../parts/AddAnotherButton";
+import DeleteButton from "../parts/DeleteButton";
+import SubSection from "./Subsection";
 
 const Container = styled.div`
     padding: 10px 20px;
@@ -24,7 +24,7 @@ const Container = styled.div`
     }
 `;
 
-class MainSection extends React.Component {
+class Section extends React.Component {
 
     constructor(props) {
         super(props);
@@ -92,9 +92,9 @@ class MainSection extends React.Component {
     }
 }
 
-MainSection.defaultProps = {
+Section.defaultProps = {
     name: "Education",
     subsectionName: "Degree"
 }
 
-export default MainSection;
+export default Section;

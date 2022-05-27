@@ -4,7 +4,7 @@ import uniqid from "uniqid";
 
 import AddSectionDropdown from "../parts/AddSectionDropdown";
 import { mainDropdownOptions, sidebarDropdownOptions } from "../resources/DropdownOptions";
-import MainSection from "./main-sections/MainSection";
+import Section from "./Section";
 
 const ColumnContainer = styled.div`
     border: 1px solid red;
@@ -78,7 +78,7 @@ class ResumeColumn extends React.Component {
         return(
             <ColumnContainer colType={type}>
                 {sections.map((section) => {
-                    return <MainSection 
+                    return <Section 
                                 key={section.id}
                                 id={section.id} 
                                 name={section.name} 

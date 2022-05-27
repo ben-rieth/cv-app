@@ -1,13 +1,13 @@
 import React from "react";
 import styled from "styled-components";
-import DeleteButton from "../../parts/DeleteButton";
-import AwardSubSection from "./AwardSubSection";
-import OrganizationSubSection from "./OrganizationSubSection";
-import PositionSubSection from "./PositionSubSection";
-import ProjectSubSection from "./ProjectSubSection";
-import SchoolSubSection from "./SchoolSubSection";
+import DeleteButton from "./../parts/DeleteButton";
+import AwardSubSection from "./main-sections/AwardSubSection";
+import OrganizationSubSection from "./main-sections/OrganizationSubSection";
+import PositionSubSection from "./main-sections/PositionSubSection";
+import ProjectSubSection from "./main-sections/ProjectSubSection";
+import SchoolSubSection from "./main-sections/SchoolSubSection";
 
-const SubSectionContainer = styled.div`
+const SubsectionContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -45,7 +45,7 @@ const SubSectionContainer = styled.div`
     }  
 `;
 
-class SubSection extends React.Component {
+class Subsection extends React.Component {
     constructor(props) {
         super(props);
 
@@ -96,7 +96,7 @@ class SubSection extends React.Component {
         }
 
         return(
-            <SubSectionContainer>
+            <SubsectionContainer>
                 {subsection}
                 <DeleteButton 
                     onClick={() => {
@@ -108,11 +108,11 @@ class SubSection extends React.Component {
                 {hoveringOverDelete ? 
                     <div className="delete"></div> :
                     <div className="blank"></div> }
-            </SubSectionContainer>
+            </SubsectionContainer>
         );
     }
 }
 
 
 
-export default SubSection;
+export default Subsection;
