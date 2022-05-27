@@ -7,6 +7,7 @@ import PositionSubSection from "./main-sections/PositionSubSection";
 import ProjectSubSection from "./main-sections/ProjectSubSection";
 import SchoolSubSection from "./main-sections/SchoolSubSection";
 import ContactSubsection from "./sidebar-sections/ContactSubsection";
+import LanguageSubsection from "./sidebar-sections/LanguageSubsection";
 import SkillsSubsection from "./sidebar-sections/SkillsSubsection";
 
 const SubsectionContainer = styled.div`
@@ -101,6 +102,9 @@ class Subsection extends React.Component {
                 subsection=<SkillsSubsection />
                 deleteBtnSize = 1.2;
                 break;
+            case "Languages":
+                subsection=<LanguageSubsection />
+                deleteBtnSize = 1.2;
             default:
                 break;
         }
