@@ -3,53 +3,42 @@ import styled from "styled-components";
 import uniqid from "uniqid";
 
 import AddSectionDropdown from "../parts/AddSectionDropdown";
+import { mainDropdownOptions, sidebarDropdownOptions } from "../resources/DropdownOptions";
 import MainSection from "./main-sections/MainSection";
 
-const MainContainer = styled.div`
+const ColumnContainer = styled.div`
     border: 1px solid red;
-    grid-area: main;
+    grid-area: ${props => props.colType};
 `;
 
-class Main extends React.Component {
-
-    dropdownOptions = [
-        {
-            optionName: "Education",
-            id: 1,
-            onSelectOption: () => this.createSection("Education", "Degree")
-        },
-        {
-            optionName: "Work Experience",
-            id: 2,
-            onSelectOption: () => this.createSection("Work Experience", "Position")
-        },
-        {
-            optionName: "Projects",
-            id: 3,
-            onSelectOption: () => this.createSection("Projects", "Project")
-        },
-        {
-            optionName: "Awards",
-            id: 4,
-            onSelectOption: () => this.createSection("Awards", "Award")
-        },
-        {
-            optionName: "Organizations",
-            id: 5,
-            onSelectOption: () => this.createSection("Organizations", "Organization")
-        }
-    ]
+class ResumeColumn extends React.Component {
 
     constructor(props) {
         super(props);
+
+        this.dropdownOptions = this.getDropdownOptions();
 
         this.state = {
             sections: [],
             options: this.dropdownOptions
         }
 
+        this.getDropdownOptions = this.getDropdownOptions.bind(this);
         this.createSection = this.createSection.bind(this);
         this.deleteSection = this.deleteSection.bind(this);
+    }
+
+    getDropdownOptions() {
+        const {type} = this.props;
+
+        switch(type) {
+            case "main":
+                return mainDropdownOptions;
+            case "sidebar":
+                return sidebarDropdownOptions;
+            default:
+                break;
+        }
     }
 
     createSection(sectionType, subName) {
@@ -84,9 +73,10 @@ class Main extends React.Component {
     render() {
         
         const {sections, options} = this.state;
+        const {type} = this.props;
 
         return(
-            <MainContainer>
+            <ColumnContainer colType={type}>
                 {sections.map((section) => {
                     return <MainSection 
                                 key={section.id}
@@ -97,11 +87,12 @@ class Main extends React.Component {
                 })}
                 <AddSectionDropdown 
                     options={options}
-                    header="Add Main Section"
+                    onSelection={this.createSection}
+                    header="Add Section"
                 />
-            </MainContainer>
+            </ColumnContainer>
         );
     }
 }
 
-export default Main;
+export default ResumeColumn;

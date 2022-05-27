@@ -2,8 +2,7 @@ import React from "react";
 import styled from 'styled-components';
 
 import Header from './resume/Header';
-import Sidebar from "./resume/Sidebar";
-import Main from "./resume/Main";
+import ResumeColumn from "./resume/ResumeColumn";
 
 const DisplayContainer = styled.div`
     margin: 0 auto;
@@ -23,8 +22,8 @@ class ResumeDisplay extends React.Component {
         return (
             <DisplayContainer>
                 <Header />
-                <Sidebar />
-                <Main />              
+                <ResumeColumn type="sidebar" />
+                <ResumeColumn type="main" />             
             </DisplayContainer>
         );
     }
