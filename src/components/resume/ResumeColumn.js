@@ -19,13 +19,30 @@ class ResumeColumn extends React.Component {
         this.dropdownOptions = this.getDropdownOptions();
 
         this.state = {
-            sections: [],
+            sections: this.getInitialSections(),
             options: this.dropdownOptions
         }
 
+        this.getInitialSections = this.getInitialSections.bind(this);
         this.getDropdownOptions = this.getDropdownOptions.bind(this);
         this.createSection = this.createSection.bind(this);
         this.deleteSection = this.deleteSection.bind(this);
+    }
+
+    getInitialSections() {
+        const {type} = this.props;
+
+        if (type === 'sidebar') {
+            return [
+                {
+                    id: uniqid(),
+                    name: "Contact",
+                    subName: ""
+                }
+            ];
+        } else {
+            return [];
+        }
     }
 
     getDropdownOptions() {

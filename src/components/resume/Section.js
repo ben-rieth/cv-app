@@ -68,14 +68,19 @@ class Section extends React.Component {
     render() {
         const {name, id, subsectionName, onDelete} = this.props;
 
+        const editable = name !== "Contact" ? true : false;
+
         return (
             <Container>
                 <div className="header">
                     <h2>{name}</h2>
-                    <DeleteButton
-                        onClick={() => {
-                            onDelete(id);
-                        }} />
+                    {editable ? 
+                        <DeleteButton
+                            onClick={() => {
+                                onDelete(id);
+                            }} /> :
+                        <div></div>
+                    }
                 </div>
                 <hr />
                 {this.state.subsections.map((subsection) => {
@@ -84,9 +89,13 @@ class Section extends React.Component {
                                 id={subsection.id}
                                 type={name}
                                 onDelete={this.deleteSection}
+                                canDelete={editable}
                             />
                 })}
-                <AddAnotherButton name={subsectionName} onClick={this.addSection} fontSize={1.2}/>
+                {editable ?
+                    <AddAnotherButton name={subsectionName} onClick={this.addSection} fontSize={1.2}/>
+                    : <div></div>
+                }
             </Container>
         );
     }

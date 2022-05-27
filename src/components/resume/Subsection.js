@@ -6,6 +6,7 @@ import OrganizationSubSection from "./main-sections/OrganizationSubSection";
 import PositionSubSection from "./main-sections/PositionSubSection";
 import ProjectSubSection from "./main-sections/ProjectSubSection";
 import SchoolSubSection from "./main-sections/SchoolSubSection";
+import ContactSubsection from "./sidebar-sections/ContactSubsection";
 
 const SubsectionContainer = styled.div`
     display: flex;
@@ -70,7 +71,7 @@ class Subsection extends React.Component {
     }
 
     render() {
-        const { type, id, onDelete } = this.props;
+        const { type, id, onDelete, canDelete } = this.props;
         const {hoveringOverDelete} = this.state;
 
 
@@ -91,6 +92,9 @@ class Subsection extends React.Component {
             case "Organizations":
                 subsection=<OrganizationSubSection />
                 break;
+            case "Contact":
+                subsection=<ContactSubsection />
+                break;
             default:
                 break;
         }
@@ -98,13 +102,16 @@ class Subsection extends React.Component {
         return(
             <SubsectionContainer>
                 {subsection}
-                <DeleteButton 
-                    onClick={() => {
-                        onDelete(id)
-                    }} 
-                    onMouseEnter={this.overDeleteButton}
-                    onMouseLeave={this.leaveDeleteBUtton}
-                    />    
+
+                {canDelete ?
+                    <DeleteButton 
+                        onClick={() => {
+                            onDelete(id)
+                        }} 
+                        onMouseEnter={this.overDeleteButton}
+                        onMouseLeave={this.leaveDeleteBUtton}
+                        /> : <div></div>
+                }  
                 {hoveringOverDelete ? 
                     <div className="delete"></div> :
                     <div className="blank"></div> }
