@@ -8,6 +8,9 @@ import SubSection from "./Subsection";
 
 const Container = styled.div`
     padding: 10px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
 
     & > hr {
         border: none;
@@ -78,7 +81,8 @@ class Section extends React.Component {
                         <DeleteButton
                             onClick={() => {
                                 onDelete(id);
-                            }} /> :
+                            }}
+                            buttonWidth={2.3} /> :
                         <div></div>
                     }
                 </div>

@@ -7,6 +7,7 @@ import PositionSubSection from "./main-sections/PositionSubSection";
 import ProjectSubSection from "./main-sections/ProjectSubSection";
 import SchoolSubSection from "./main-sections/SchoolSubSection";
 import ContactSubsection from "./sidebar-sections/ContactSubsection";
+import SkillsSubsection from "./sidebar-sections/SkillsSubsection";
 
 const SubsectionContainer = styled.div`
     display: flex;
@@ -20,7 +21,7 @@ const SubsectionContainer = styled.div`
         display: flex;
         flex-direction: column;
         gap: 2px;
-        margin-bottom: 10px;
+        ${'' /* margin-bottom: 10px; */}
         max-width: 92%;
 
         & > .row {
@@ -76,6 +77,7 @@ class Subsection extends React.Component {
 
 
         let subsection;
+        let deleteBtnSize = 2;
         switch(type) {
             case "Education":
                 subsection=<SchoolSubSection/>;
@@ -95,6 +97,10 @@ class Subsection extends React.Component {
             case "Contact":
                 subsection=<ContactSubsection />
                 break;
+            case "Skills":
+                subsection=<SkillsSubsection />
+                deleteBtnSize = 1.2;
+                break;
             default:
                 break;
         }
@@ -110,6 +116,7 @@ class Subsection extends React.Component {
                         }} 
                         onMouseEnter={this.overDeleteButton}
                         onMouseLeave={this.leaveDeleteBUtton}
+                        buttonWidth={deleteBtnSize}
                         /> : <div></div>
                 }  
                 {hoveringOverDelete ? 
